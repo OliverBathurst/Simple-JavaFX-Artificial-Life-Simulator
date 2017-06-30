@@ -25,7 +25,7 @@ class AnInterface extends AWorld{
 	 * Updates positions for each entity by calling scanArea
 	 */
 	protected void update() {
-		for (int i=0;i<numanimals;i++){
+		for (int i=0;i<AWorld.size();i++){
 			scanArea(randDirection(), AWorld.get(i).x, AWorld.get(i).y, i); //update positions by sending animals and a direction
 		}
 	}
@@ -159,7 +159,7 @@ class AnInterface extends AWorld{
 		writer.newLine();
 		writer.write("Animals");
 		writer.newLine();
-		for (int i=0;i<numanimals;i++){ //loop through all entities
+		for (int i=0;i<AWorld.size();i++){ //loop through all entities
 			if(AWorld.get(i).symbol2 !='*' && AWorld.get(i).symbol2 !='#' && AWorld.get(i).energy2 > 0){
 				writer.write(AWorld.get(i).species2 + ","+ AWorld.get(i).symbol2 +","+ AWorld.get(i).energy2 + "," + AWorld.get(i).x+ "," + AWorld.get(i).y+ "," 
 					  + AWorld.get(i).isherbivore + "\n");
@@ -243,9 +243,8 @@ class AnInterface extends AWorld{
    			while (reader.readLine() != null) {
                 count++;//count all lines
           	}
-   			for (int i=0;i<numanimals;i++){//take existing entities away
+   			for (int i=0;i<AWorld.size();i++){//take existing entities away
    				AWorld.remove(i);
-   				numanimals = 0;
    			}
    			for(int i=5;i<count;i++){
    				loadAnimals(Files.readAllLines(Paths.get(text)).get(i), i-5,a);//pass/load animals in
@@ -372,8 +371,8 @@ class AnInterface extends AWorld{
 	}		
 	}
 	protected static void tryRemove(int ID) {
-		try{
-			AWorld.remove(ID);
+		try{		
+			AWorld.remove(ID);		
 		}catch(Exception e){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
@@ -411,13 +410,13 @@ class AnInterface extends AWorld{
 		Optional<String> result3 = dialog3.showAndWait();
 		OliverBathurst.AWorld.maxanimals = Integer.parseInt(result3.get());
 		
-		for(int i = 0;i<numanimals;i++){ //loop, deleting all entities that don't fit in new dimensions
+		for(int i = 0;i<AWorld.size();i++){ //loop, deleting all entities that don't fit in new dimensions
 			if (AWorld.get(i).x > xdimen || AWorld.get(i).y > ydimen){
 				AWorld.remove(i);
 			}
 		}
 		if (pastEnt > maxanimals){//if new max entity value is smaller than the last
-			for(int i=pastEnt;i>numanimals;i--){//work from old limit down to new one, deleting
+			for(int i=pastEnt;i>AWorld.size();i--){//work from old limit down to new one, deleting
 				AWorld.remove(i);
 			}
 		}	

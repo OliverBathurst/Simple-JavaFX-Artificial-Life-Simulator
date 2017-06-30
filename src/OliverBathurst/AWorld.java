@@ -8,8 +8,7 @@ import OliverBathurst.AnInterface.Direction;
  *
  */
 class AWorld extends AnEntity{
-	protected static int xdimen =10, ydimen=10;		// number of entities
-	protected static int numanimals = 0,maxanimals = 20;
+	protected static int xdimen =10, ydimen=10, maxanimals = 20;		// number of entities
 	protected static ArrayList<AnEntity> AWorld;					// array of entities
 	private Random rng; //(random no. gen)
 	/**
@@ -34,13 +33,13 @@ class AWorld extends AnEntity{
 		return ydimen;	//return y dimension
 	}
 	protected void moveAnimals() {
-			for (int i=0;i<numanimals;i++){
+			for (int i=0;i<AWorld.size();i++){
 				scanArea(AnInterface.randDirection(), AWorld.get(i).x, AWorld.get(i).y, i); //update positions by sending animals and a direction
 			}			
 		}	
 	protected int GetAnimalAtPos(int x, int y){
 		int animalnumberatpos = 0;
-		for(int i=0;i<numanimals;i++){
+		for(int i=0;i<AWorld.size();i++){
 			if (AWorld.get(i).getAnimalAtPos(x,y)) {
 				animalnumberatpos = i;	
 				break;			
@@ -63,12 +62,11 @@ class AWorld extends AnEntity{
 			}else{//OTHERWISE IT IS ANIMAL
 				AWorld.add(new Life(newX,newY, species, symbol));	
 			}					
-			numanimals++;
 		}
 	}	
 	private boolean isFoodHere(int x, int y){///Used to identify food in surrounding area
 		boolean result = false; //default to false
-		for(int i=0;i<numanimals;i++){
+		for(int i=0;i<AWorld.size();i++){
 			if (AWorld.get(i).getAnimalAtPos(x,y) != true){
 				result =false;
 			}else if(AWorld.get(i).symbol2 == '*'){ //if food is here return true
@@ -82,7 +80,7 @@ class AWorld extends AnEntity{
 	}
 	protected static boolean doesExist(int x, int y){	///Used in GUI implementation to spawn food///
 		boolean res = false;
-		for(int i=0;i<numanimals; i++){
+		for(int i=0;i<AWorld.size(); i++){
 			if(AWorld.get(i).getAnimalAtPos(x,y)){
 				res = true;//breakif it does exist
 				break;		
@@ -94,7 +92,7 @@ class AWorld extends AnEntity{
 	}
 	protected static int enumFood(){ //sum food
 		int counter = 0;
-		for (int i=0;i<numanimals;i++){
+		for (int i=0;i<AWorld.size();i++){
 			if(AWorld.get(i).symbol2 == '*'){ //if symbol is food, increment
 				counter++;
 			}
@@ -103,7 +101,7 @@ class AWorld extends AnEntity{
 	}
 	protected static int enumObstacles(){ //sum obstacles
 		int counter = 0;
-		for (int i=0;i<numanimals;i++){
+		for (int i=0;i<AWorld.size();i++){
 			if(AWorld.get(i).symbol2 == '#'){//if symbol is obstacle, increment
 				counter++;
 			}
@@ -362,7 +360,7 @@ class AWorld extends AnEntity{
 	 * Pass the GUI interface for display
 	 */
 	protected void showAnimal(GUIInterface guiInterface) {///Pass the GUI interface for display
-		for (int i=0; i<numanimals; i++) {
+		for (int i=0; i<AWorld.size(); i++) {
 			AWorld.get(i).displayAnimal(guiInterface);//display animals (number of animal times)
 		}	
 	}	

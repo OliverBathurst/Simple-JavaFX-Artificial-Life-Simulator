@@ -176,9 +176,9 @@ public class GUIInterface extends Application {
             	}else{
             		try{
             			newarena2.addAnimal("obs", '#',newarena2); //make generic obstacle
-            			AWorld.AWorld.get(AWorld.numanimals-1).isden = true; //set up as den
+            			AWorld.AWorld.get(AWorld.AWorld.size()-1).isden = true; //set up as den
             			Image image = new Image("/den.png"); //set image
-            			AWorld.AWorld.get(AWorld.numanimals-1).image = image;
+            			AWorld.AWorld.get(AWorld.AWorld.size()-1).image = image;
         				
             			drawWorld();//refresh
             			autoSav();  //autosave             	
@@ -199,9 +199,9 @@ public class GUIInterface extends Application {
             	}else{
             		try{
             			newarena2.addAnimal("obs", '#',newarena2);
-            			AWorld.AWorld.get(AWorld.numanimals-1).isfoodsource = true; //set up as den	
+            			AWorld.AWorld.get(AWorld.AWorld.size()-1).isfoodsource = true; //set up as den	
             			Image image = new Image("/foodsource.png");//set special image
-            			AWorld.AWorld.get(AWorld.numanimals-1).image = image;
+            			AWorld.AWorld.get(AWorld.AWorld.size()-1).image = image;
         			
             			drawWorld();
             			autoSav();               	
@@ -328,7 +328,7 @@ public class GUIInterface extends Application {
             		dialog.setHeaderText("Text Input Dialog");
             		dialog.setContentText("Enter ID of lifeform: ");
             		Optional<String> result = dialog.showAndWait();
-            		
+
             		AnInterface.tryRemove(Integer.parseInt(result.get())); //call method
             		drawWorld();
     				autoSav();
@@ -364,7 +364,7 @@ public class GUIInterface extends Application {
 		    	Optional<ButtonType> result = alert.showAndWait();
 		    	if (result.get() == buttonOne){
 		    		try{
-		    			AnInterface.tryRemove(AWorld.numanimals-1); //call interface remove method with ID
+		    			AnInterface.tryRemove(AWorld.AWorld.size()-1); //call interface remove method with ID
 		    			autoSav();
 		    			drawWorld();
 		    		}catch(Exception e){	
@@ -695,8 +695,8 @@ public class GUIInterface extends Application {
 		        		alertInfo.showAndWait();
 	            	}else{
 	            		newarena2.addAnimal("food", '*',newarena2); //add food
-	            		AWorld.AWorld.get(AWorld.numanimals-1).x = (((int) a)-4); //modify its coordinates to be placed correctly
-	            		AWorld.AWorld.get(AWorld.numanimals-1).y = (((int) b)-64);
+	            		AWorld.AWorld.get(AWorld.AWorld.size()-1).x = (((int) a)-4); //modify its coordinates to be placed correctly
+	            		AWorld.AWorld.get(AWorld.AWorld.size()-1).y = (((int) b)-64);
 	            	}
 	    			drawWorld(); //refresh
 	    			autoSav();
@@ -729,8 +729,8 @@ public class GUIInterface extends Application {
 	                    		alertInfo.showAndWait();
 	                		}else{
 	                			newarena2.addAnimal(result.get(), protect,newarena2); //add animal
-		            			AWorld.AWorld.get(AWorld.numanimals-1).x = (((int) a)-4); //modify coords
-		            			AWorld.AWorld.get(AWorld.numanimals-1).y = (((int) b)-64);
+		            			AWorld.AWorld.get(AWorld.AWorld.size()-1).x = (((int) a)-4); //modify coords
+		            			AWorld.AWorld.get(AWorld.AWorld.size()-1).y = (((int) b)-64);
 		            			drawWorld();
 	                		}
 	                		drawWorld();
@@ -748,18 +748,18 @@ public class GUIInterface extends Application {
 	private void checkCounts() { 
 		if (foodsourcecount >= 1200){ //20 secs given 60fps refresh (60*20)
 			Image image = new Image("/fruit.png"); //setup image of fruit
-			for (int i=0;i<AWorld.numanimals;i++){
+			for (int i=0;i<AWorld.AWorld.size();i++){
 				if (AWorld.AWorld.get(i).symbol2 == '#' && AWorld.AWorld.get(i).isfoodsource == true){
 					if (AWorld.doesExist(AWorld.AWorld.get(i).x+10, AWorld.AWorld.get(i).y) == false && AWorld.AWorld.get(i).x+10 < AWorld.xdimen){
 						newarena2.addAnimal("food", '*',newarena2); //produce food
-						AWorld.AWorld.get(AWorld.numanimals-1).x = AWorld.AWorld.get(i).x+10; //setup its coords
-						AWorld.AWorld.get(AWorld.numanimals-1).y = AWorld.AWorld.get(i).y;
-						AWorld.AWorld.get(AWorld.numanimals-1).image = image; 
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).x = AWorld.AWorld.get(i).x+10; //setup its coords
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).y = AWorld.AWorld.get(i).y;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).image = image; 
 					}else if(AWorld.doesExist(AWorld.AWorld.get(i).x-10, AWorld.AWorld.get(i).y) == false && AWorld.AWorld.get(i).x-10 < 0){
 						newarena2.addAnimal("food", '*',newarena2);
-						AWorld.AWorld.get(AWorld.numanimals-1).x = AWorld.AWorld.get(i).x-10;
-						AWorld.AWorld.get(AWorld.numanimals-1).y = AWorld.AWorld.get(i).y;
-						AWorld.AWorld.get(AWorld.numanimals-1).image = image; 
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).x = AWorld.AWorld.get(i).x-10;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).y = AWorld.AWorld.get(i).y;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).image = image; 
 					}
 				}
 			}
@@ -767,18 +767,18 @@ public class GUIInterface extends Application {
 		}
 		if (dencount >= 1200){
 			Random r = new Random();
-			for (int i=0;i<AWorld.numanimals;i++){
+			for (int i=0;i<AWorld.AWorld.size();i++){
 				if (AWorld.AWorld.get(i).symbol2 == '#' && AWorld.AWorld.get(i).isden == true){
 					if (AWorld.doesExist(AWorld.AWorld.get(i).x+10, AWorld.AWorld.get(i).y) == false && AWorld.AWorld.get(i).x+10 < AWorld.xdimen){
 						char c = (char)(r.nextInt(26) + 'a');
 						newarena2.addAnimal("denanim", c,newarena2);
-						AWorld.AWorld.get(AWorld.numanimals-1).x = AWorld.AWorld.get(i).x+10;
-						AWorld.AWorld.get(AWorld.numanimals-1).y = AWorld.AWorld.get(i).y;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).x = AWorld.AWorld.get(i).x+10;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).y = AWorld.AWorld.get(i).y;
 					}else if(AWorld.doesExist(AWorld.AWorld.get(i).x-10, AWorld.AWorld.get(i).y) == false && AWorld.AWorld.get(i).x-10 < 0){
 						char b = (char)(r.nextInt(26) + 'a');
 						newarena2.addAnimal("denanim", b,newarena2);
-						AWorld.AWorld.get(AWorld.numanimals-1).x = AWorld.AWorld.get(i).x-10;
-						AWorld.AWorld.get(AWorld.numanimals-1).y = AWorld.AWorld.get(i).y;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).x = AWorld.AWorld.get(i).x-10;
+						AWorld.AWorld.get(AWorld.AWorld.size()-1).y = AWorld.AWorld.get(i).y;
 					}
 				}
 			}
@@ -843,12 +843,12 @@ public class GUIInterface extends Application {
 	private void printStats(){		
 		drawWorld();
 		String a = ""; //string for overflow
-		if (AWorld.numanimals == 0 || enumEntities()==0){	//if no entities		
+		if (AWorld.AWorld.size() == 0 || enumEntities()==0){	//if no entities		
 			defaultFont();
 			gc.fillText("No entities present",15,20);
 		}else{	    	
 	    	int j = 0; //small counter used to align/space text upwards	    	
-			for (int i=0;i<AWorld.numanimals;i++){
+			for (int i=0;i<AWorld.AWorld.size();i++){
 				defaultFont();
 
 				if ((15+j*10)> AWorld.ydimen){ //append to string
@@ -865,12 +865,12 @@ public class GUIInterface extends Application {
 	private void printStatsAnim(){
 		drawWorld();
 		String a = "";
-		if (AWorld.numanimals ==0 || enumAnimals()==0){			
+		if (AWorld.AWorld.size() ==0 || enumAnimals()==0){			
 			defaultFont();
 			gc.fillText("No animals present",15,20);
 		}else{	    	
 	    	int j = 0; //small counter used to align/space text upwards	    	
-			for (int i=0;i<AWorld.numanimals;i++){
+			for (int i=0;i<AWorld.AWorld.size();i++){
 				defaultFont();
 				if (AWorld.AWorld.get(i).species2 != "obs"&& AWorld.AWorld.get(i).species2 != "food"){
 					if ((15+j*10)> AWorld.ydimen){
@@ -896,14 +896,14 @@ public class GUIInterface extends Application {
 	}
 	protected static int enumEntities(){ //enumerates entities that are alive (don't have a blank symbol)
 		int counter = 0;
-		for (int i=0;i<AWorld.numanimals;i++){
+		for (int i=0;i<AWorld.AWorld.size();i++){
 			counter++;
 		}
 		return counter;
 	}
 	protected static int enumAnimals(){ //enumerates entities that are alive (don't have a blank symbol)
 		int j = 0;
-		for (int i=0;i<AWorld.numanimals;i++){
+		for (int i=0;i<AWorld.AWorld.size();i++){
 			if(AWorld.AWorld.get(i).species2 != "food" && AWorld.AWorld.get(i).species2 != "obs"){
 				j++; //increment
 			}
@@ -918,7 +918,7 @@ public class GUIInterface extends Application {
 	private void debug() {
 		try{
 			if (debug ==true){
-				for (int i=0;i<AWorld.numanimals;i++){
+				for (int i=0;i<AWorld.AWorld.size();i++){
 					defaultFont(); //for just animals
 					if (AWorld.AWorld.get(i).symbol2 != '#' && AWorld.AWorld.get(i).symbol2 != '*'){
 						gc.fillText("ID: " + i + " ("+ AWorld.AWorld.get(i).x + "," + AWorld.AWorld.get(i).y + ")", AWorld.AWorld.get(i).x, AWorld.AWorld.get(i).y);
